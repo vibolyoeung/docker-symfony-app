@@ -1,30 +1,43 @@
-PHP5 with PostgreSQL driver and PHPUnit
+Symfony App with PSQL Driver
 =====
 
 Basic Usage
-------
+-----------
 
 ```
-docker run -v $(pwd):/app webridge/phpunit
-```
-
-Link to a Database
-------
-
-```
-docker run --name db_name -d postgresql
-
-docker run \
-    -v $(pwd):/app \
-    --link db_name:db \
+docker run -d -v $(pwd):/var/app \
+    -p 8080:80 \
     webridge/phpunit
 ```
 
-You may add `PHPUnit` parameters such as `-c app/` at the end:
+Linking a Database
+------------------
 
 ```
-docker run \
+docker run -d -v $(pwd):/var/app \
+    --link your_db:db \
+    -p 8080:80 \
+    webridge/phpunit
+```
+
+
+Basic Setup Example
+-------------------
+
+```
+docker run -d --name sample_db postgres
+
+docker run --rm \
     -v $(pwd):/app \
-    --link db_name:db \
-    webridge/phpunit -c app/
+    -v YOUR_COMPOSER_CACHE:/root/.composer \
+    -e COMPOSER_HOME=/root/.composer \
+    -e SENSIOLABS_ENABLE_NEW_DIRECTORY_STRUCTURE=true \
+    --link sample_db:db \
+    webridge/composer install --prefer-dist
+    
+docker run -d \
+    -v $(pwd):/var/app \
+    --link sample_db:db \
+    -p 8080:80 \
+    webridge/phpunit
 ```
