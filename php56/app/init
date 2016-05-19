@@ -1,0 +1,52 @@
+#!/bin/bash
+
+script_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+application_dir="/var/app"
+parameters_file="${application_dir}/app/config/parameters.yml"
+secret=`apg -a 1 -M nl -n 1 -m 40 -E ghijklmnopqrstuvwxyz`
+
+: ${database_host:=${DB_PORT_5432_TCP_ADDR}}
+: ${database_port:=${DB_PORT_5432_TCP_PORT}}
+: ${database_user:=postgres}
+: ${database_password:=postgres}
+
+## Updating parameters.yml
+
+sed -i "s/^\\( *database_host:\\).*/\\1 ${database_host}/" "$parameters_file"
+RETVAL=$?
+if [ $RETVAL -ne 0 ]; then
+    exit $RETVAL
+fi
+
+sed -i "s/^\\( *database_port:\\).*/\\1 ${database_port}/" "$parameters_file"
+RETVAL=$?
+if [ $RETVAL -ne 0 ]; then
+    exit $RETVAL
+fi
+
+sed -i "s/^\\( *database_user:\\).*/\\1 ${database_user}/" "$parameters_file"
+RETVAL=$?
+if [ $RETVAL -ne 0 ]; then
+    exit $RETVAL
+fi
+
+sed -i "s/^\\( *database_password:\\).*/\\1 ${database_password}/" "$parameters_file"
+RETVAL=$?
+if [ $RETVAL -ne 0 ]; then
+    exit $RETVAL
+fi
+
+sed -i "s/^\\( *secret:\\).*/\\1 ${secret}/" "$parameters_file"
+RETVAL=$?
+if [ $RETVAL -ne 0 ]; then
+    exit $RETVAL
+fi
+
+## Checking app_dev
+
+"$script_dir/app-make-app-accessible" "$application_dir"
+RETVAL=$?
+if [ $RETVAL -ne 0 ]; then
+    exit $RETVAL
+fi
