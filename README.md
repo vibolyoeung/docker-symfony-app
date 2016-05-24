@@ -1,5 +1,11 @@
-Symfony App with PSQL Driver
+Symfony App with PostgreSQL Driver
 =====
+
+Tags
+----
+
+ - PHP 5.6: `webridge/symfony-app:php56`
+ - PHP 7.0: `webridge/symfony-app:php70`
 
 Basic Usage
 -----------
