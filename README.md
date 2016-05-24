@@ -7,7 +7,7 @@ Basic Usage
 ```
 docker run -d -v $(pwd):/var/app \
     -p 8080:80 \
-    webridge/phpunit
+    webridge/symfony-app
 ```
 
 Linking a Database
@@ -17,7 +17,7 @@ Linking a Database
 docker run -d -v $(pwd):/var/app \
     --link your_db:db \
     -p 8080:80 \
-    webridge/phpunit
+    webridge/symfony-app
 ```
 
 
@@ -39,5 +39,5 @@ docker run -d \
     -v $(pwd):/var/app \
     --link sample_db:db \
     -p 8080:80 \
-    webridge/phpunit
+    webridge/symfony-app
 ```
