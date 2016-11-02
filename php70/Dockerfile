@@ -6,8 +6,10 @@ FROM webridge/docker-php-app:php70
 MAINTAINER Thomas BARTHELEMY <thomas.barthelemy@webridge.asia>
 
 RUN apt-get update
-RUN apt-get install --no-install-recommends -qy --force-yes libfile-slurp-perl php7.0-sqlite
+RUN apt-get install --no-install-recommends -qy --force-yes libfile-slurp-perl
 RUN apt-get install --no-install-recommends -qy patch
+# Install other needed extensions
+RUN apt-get install --no-install-recommends -qy libfontconfig
 
 # Apache2
 ENV APP_DOCUMENT_ROOT /var/app/web
