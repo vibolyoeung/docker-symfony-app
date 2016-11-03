@@ -9,7 +9,8 @@ RUN apt-get update
 RUN apt-get install --no-install-recommends -qy --force-yes libfile-slurp-perl
 RUN apt-get install --no-install-recommends -qy patch
 # Install other needed extensions
-RUN apt-get install --no-install-recommends -qy libfontconfig
+RUN apt-get install --no-install-recommends -qy libfontconfig libxrender1
+RUN apt-get install wkhtmltopdf -y
 
 # Apache2
 ENV APP_DOCUMENT_ROOT /var/app/web
